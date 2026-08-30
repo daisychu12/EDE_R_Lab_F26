@@ -1,0 +1,43 @@
+---
+title: "Assignment 1: Introduction to Data Exploration"
+author: "Daisy Chu"
+output: pdf_document
+---
+
+## OVERVIEW
+
+This exercise accompanies the introductory material in Environmental Data Exploration. 
+
+## Directions
+1.  Rename this file `<FirstLast>_A01_Introduction.Rmd` (replacing `<FirstLast>` with your first and last name).
+2.  Change "Student Name" on line 3 (above) with your name.
+3.  Work through the steps, **creating code and output** that fulfill each instruction.
+4.  Be sure to **answer the questions** in this assignment document.
+5.  When you have completed the assignment, **Knit** the text and code into a single PDF file.
+6.  After Knitting, submit the completed exercise (PDF file) to the appropriate assignment section on Canvas.
+
+
+## 1) Discussion Questions
+Enter answers to the questions just below the >Answer: prompt.
+
+1. What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
+
+> Answer: I took an ecological data science course during my undergraduate studies that taught us the basic applications of R coding to visualizations and analysis. However, a lot of the course was replicating visualizations from papers with step by step R code, so we weren't learning how to perform data analysis with R on our own. This past year I signed up for an environmental data science certificate that taught us how to perform basic data analysis in R, as well as giving us the code to push and pull our code using Github, but not really touching in Git itself. Overall, I have basic previous experience on data analysis, R, and Git, but still don't feel very confident about my skill level.
+
+2. Are there any components of the course about which you feel confident?
+
+> Answer: I feel confident in navigating the coding basics and figuring out ways to troubleshoot any bugs or coding issues I run into. I also feel confident I'm able to ensure my code is reproducible for others to follow along.
+
+3. Are there any components of the course about which you feel apprehensive?
+
+> Answer: I do feel a bit apprehensive of data exploration and being able to spot interesting or unique patterns within datasets, as well as deciding which visualizations are most effective or relevant in showing the trends in the data. As the coding and data analysis components get more complicated, I'm a bit apprehensive of being able to keep up and allow it to build off of the coding basics from the beginning of the course.
+
+
+## 2) GitHub
+
+Go over Tasks 1.1. through 1.6 on Course Setup page. Provide a link below to your forked course repository in GitHub. Make sure you have pulled all recent changes from the course repository and that you have updated your course README file, committed those changes, and pushed them to your GitHub account. 
+
+> Answer: https://github.com/daisychu12/EDE_R_Lab_F26
+
+## 3) Knitting
+When you have completed this document, click the `knit` button.This should produce a PDF copy of your markdown document. Submit this PDF to Canvas 
