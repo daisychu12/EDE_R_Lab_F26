@@ -26,7 +26,7 @@ This exercise accompanies the lessons/labs in Environmental Data Explorations on
 
 Set the following R code chunk so that it runs when knit, but no messages, errors, or any output is shown. The code itself, however, should be displayed.
 
-```{r project.setup, echo=TRUE, message=TRUE, warning=TRUE}
+```{r project.setup, message=TRUE, warning=TRUE, results='hide'}
 #Import libraries
 library(tidyverse)
 library(knitr)
