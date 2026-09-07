@@ -1,6 +1,6 @@
 ---
 title: "Assignment 2: Coding Basics"
-author: "Student Name"
+author: "Daisy Chu"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -26,7 +26,7 @@ This exercise accompanies the lessons/labs in Environmental Data Explorations on
 
 Set the following R code chunk so that it runs when knit, but no messages, errors, or any output is shown. The code itself, however, should be displayed.
 
-```{r project.setup}
+```{r project.setup, include=FALSE}
 #Import libraries
 library(tidyverse)
 library(knitr)
@@ -45,11 +45,21 @@ library(knitr)
 4.  Insert comments in your code to describe what you are doing.
 
 ```{r basics 1}
-#1. 
+#1.
+# calling the sequence function and setting the start # to 1, end # to 55
+# and setting the interval to 5
+# assign this to variable sequence
+sequence <- seq(1,55,5)
 
 #2. 
+# calling mean function on sequence
+# calling median function on sequence
+mean(sequence)
+median(sequence)
 
 #3. 
+# using the less than sign to compare if the mean is greater than the median
+mean(sequence) > median(sequence)
 
 ```
 
@@ -64,13 +74,26 @@ library(knitr)
 8.  Label the columns of your data frame with informative titles.
 
 ```{r basics 2}
+# student_names is a vector of characters
+student_names <- c("Sam", "Jess", "Tom", "Mary")
 
+# test_scores is a vector of numbers
+test_scores <- c(88, 91, 95, 83)
 
+# scholarship is a vector of logical values
+scholarship <- c(TRUE, FALSE, TRUE, FALSE)
+
+# combine each of the vectors into a data frame called math_final
+math_class <- data.frame("student_names" = student_names, 
+                         "final_exam_scores" = test_scores, 
+                         "has_scholarship" = scholarship)
+
+math_class
 ```
 
 9.  QUESTION: How is this data frame different from a matrix?
 
-> Answer:
+> Answer: A matrix can only contain values of the same class/data type, whereas a data frame can contain values of different classes as long as they're in the same vector/column of data.
 
 10. Create a function with one input. In this function, use `if`...`else` to evaluate the value of the input: if it is greater than 50, print the word "Pass"; otherwise print the word "Fail". 
 
@@ -82,21 +105,35 @@ library(knitr)
 
 ```{r basics 3}
 #10. Create a function using if...else
+greater_than_50 <- function(x) {
+  if (x > 50) {
+    print("Pass")
+  } else {
+    print("Fail")
+  }
+}
 
 #11. Create a function using ifelse()
+ifelse_greater_than_50 <- function(x) {
+  ifelse(x > 50, "Pass", "Fail")
+}
 
 #12a. Run the first function with the value 52.5
+greater_than_50(52.5)
 
 #12b. Run the second function with the value 52.5
+ifelse_greater_than_50(52.5)
 
 #13a. Run the first function with the vector of test scores
+# greater_than_50(test_scores)
 
 #13b. Run the second function with the vector of test scores
+ifelse_greater_than_50(test_scores)
 ```
 
 14. QUESTION: Which option of `if`...`else` vs. `ifelse` worked? Why? (Hint: search the web for "R vectorization")
 
-> Answer:
+> Answer: Only `ifelse` worked because it's a vectorization function that can perform the comparison function directly on the vector of test scores, whereas the `if`...`else` function can only take in one element from the vector at a time unless we use a loop, which would be more inefficient.
 
 
 ## Crafting reports - Part 4
@@ -107,7 +144,7 @@ Add a table of contents to your document and knit to a PDF. Submit your PDF to C
 
 ### Github link
 
-> Answer:
+> Answer: https://github.com/daisychu12/EDE_R_Lab_F26
 
 
 **NOTE** Before knitting, you'll need to comment out the call to the function in Q13 that does not work. (A document can't knit if the code it contains causes an error!)
