@@ -53,8 +53,9 @@ sequence <- seq(1,55,5)
 
 #2. 
 # calling mean function on sequence
-# calling median function on sequence
 mean(sequence)
+
+# calling median function on sequence
 median(sequence)
 
 #3. 
