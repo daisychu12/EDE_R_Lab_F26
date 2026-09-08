@@ -34,7 +34,6 @@ library(knitr)
 
 ```
 
-
 ## Coding Basics - Part 2
 
 1.  Generate a sequence of numbers from one to 55, increasing by fives. Assign this sequence a name.
@@ -97,9 +96,9 @@ math_class
 
 > Answer: A matrix can only contain values of the same class/data type, whereas a data frame can contain values of different classes as long as they're in the same vector/column of data.
 
-10. Create a function with one input. In this function, use `if`...`else` to evaluate the value of the input: if it is greater than 50, print the word "Pass"; otherwise print the word "Fail". 
+10. Create a function with one input. In this function, use `if`...`else` to evaluate the value of the input: if it is greater than 50, print the word "Pass"; otherwise print the word "Fail".
 
-11. Create a second function that does the exact same thing as the previous one but uses `ifelse()` instead if `if`...`else `. 
+11. Create a second function that does the exact same thing as the previous one but uses `ifelse()` instead if `if`...`else`.
 
 12. Run both functions using the value 52.5 as the input
 
@@ -137,16 +136,14 @@ ifelse_greater_than_50(test_scores)
 
 > Answer: Only `ifelse` worked because it's a vectorization function that can perform the comparison function directly on the vector of test scores, whereas the `if`...`else` function can only take in one element from the vector at a time unless we use a loop, which would be more inefficient.
 
-
 ## Crafting reports - Part 4
 
 ### Knit and submit.
 
-Add a table of contents to your document and knit to a PDF. Submit your PDF to Canvas, but also be sure to commit and push your Rmd file used to create this knit document to GitHub. In the section below, add a link to your GitHub repository. 
+Add a table of contents to your document and knit to a PDF. Submit your PDF to Canvas, but also be sure to commit and push your Rmd file used to create this knit document to GitHub. In the section below, add a link to your GitHub repository.
 
 ### Github link
 
-> Answer: https://github.com/daisychu12/EDE_R_Lab_F26
-
+> Answer: <https://github.com/daisychu12/EDE_R_Lab_F26>
 
 **NOTE** Before knitting, you'll need to comment out the call to the function in Q13 that does not work. (A document can't knit if the code it contains causes an error!)
