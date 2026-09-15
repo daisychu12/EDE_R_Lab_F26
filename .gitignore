@@ -49,6 +49,7 @@ vignettes/*.pdf
 *_TOPOST.Rmd
 *_TODELETE.Rmd
 *_TODELETE.pdf
+*_TODELETE.csv
 *_NOPOST.xlsx
 *_NOPOST.Rmd
 
