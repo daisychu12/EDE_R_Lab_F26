@@ -1,10 +1,11 @@
 ---
 title: "Assignment 3: Data Exploration"
-author: "Student Name"
+author: "Daisy Chu"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
   chunk_output_type: console
+toc: true
 ---
 
 ## OVERVIEW
@@ -15,7 +16,7 @@ This exercise accompanies the lessons in Environmental Data Exploration M3: Data
 
 1.  Rename this file `<FirstLast>_A03_DataExploration.Rmd` (replacing `<FirstLast>` with your first and last name).
 2.  Change "Student Name" on line 3 (above) with your name.
-3.  Work through the steps, **creating code and output** that fulfill each instruction. 
+3.  Work through the steps, **creating code and output** that fulfill each instruction.
 4.  Assign a useful **name to each code chunk** and include ample **comments** with your code.
 5.  Be sure to **answer the questions** in this assignment document.
 6.  When you have completed the assignment, **Knit** the text and code into a single PDF file.
@@ -23,9 +24,9 @@ This exercise accompanies the lessons in Environmental Data Exploration M3: Data
 
 **TIP**: If your code extends past the page when knit, tidy your code by manually inserting line breaks.
 
-**TIP**: If your code fails to knit, check that no `install.packages()` or `View()` commands exist in your code. 
+**TIP**: If your code fails to knit, check that no `install.packages()` or `View()` commands exist in your code.
 
----
+------------------------------------------------------------------------
 
 ## Set up your R session
 
@@ -45,121 +46,153 @@ Neonics <- read.table(
   file = here('Data', 'Raw', 'ECOTOX_Neonicotinoids_Insects_raw.txt'),
   header = TRUE, sep = "|", quote = "\"", comment.char = ""
 )
-head(Neonics)
 
 Litter <- read_csv(
   file = here("Data", "Raw", "NEON_NIWO_Litter_massdata_2016-26_raw.csv")
 )
-head(Litter)
 ```
 
 ## Learn about your system
 
 2.  The neonicotinoid dataset was collected from the Environmental Protection Agency's ECOTOX Knowledgebase, a database for ecotoxicology research. Neonicotinoids are a class of insecticides used widely in agriculture. The dataset that has been pulled includes all studies published on insects. Why might we be interested in the ecotoxicology of neonicotinoids on insects? Feel free to do a brief internet search if you feel you need more background information.
 
-> Answer:
+> Answer: Neonicotinoids are the most widely used insecticide in the world (The Xeres Society). They were initially introduced as a less toxic insecticide, but new studies have shown negative impacts on vital pollinators and aquatic ecosystems (The Xeres Society). We might be interested in seeing how neonicotinoids impact specific insect species like native bees, in order to better protect these important pollinators.
+>
+> Source: <https://www.xerces.org/pesticides/understanding-neonicotinoids>
 
-3.  The Niwot Ridge litter and woody debris dataset was collected from the National Ecological Observatory Network, which collectively includes 81 aquatic and terrestrial sites across 20 ecoclimatic domains. 32 of these sites sample forest litter and woody debris, and we will focus on the Niwot Ridge long-term ecological research (LTER) station in Colorado. Why might we be interested in studying litter and woody debris that falls to the ground in forests? Feel free to do a brief internet search if you feel you need more background information.
+3.  The Niwot Ridge litter and woody debris data set was collected from the National Ecological Observatory Network, which collectively includes 81 aquatic and terrestrial sites across 20 ecoclimatic domains. 32 of these sites sample forest litter and woody debris, and we will focus on the Niwot Ridge long-term ecological research (LTER) station in Colorado. Why might we be interested in studying litter and woody debris that falls to the ground in forests? Feel free to do a brief internet search if you feel you need more background information.
 
-> Answer:
+> Answer: Litter and woody debris are important sources of nutrient for the soil, and play an important role in nutrient cycling within forest ecosystems. Studying them would allow us to analyze the health of the forest ecosystem. Leaf litter and woody debris also serve as fuel load for fires. By studying litter quantity throughout time, we could also make more informed decisions in fire management.
+>
+> Source: <https://fieldofmar-e.schools.nsw.gov.au/fact-sheets/habitats/leaf-litter-habitats-fact-sheet>
 
 4.  How is litter and woody debris sampled as part of the NEON network? Read the NEON_Litterfall_UserGuide.pdf document to learn more. List three pieces of salient information about the sampling methods here:
 
-> Answer: 
- 1.
- 2.
- 3. 
+> Answer:
+>
+> 1\. Litter is collected in elevated PVC traps, while woody debris is collected in ground traps.
+>
+> 2\. Sampling occurred at NEON sites where woody vegetation is over 2 meters tall in height.
+>
+> 3\. Trap placement is either targeted or random depending on vegetation: where more than half of the aerial cover is woody vegetation over 2m tall traps are placed randomly and where less than half of aerial cover is woody vegetation traps are placed beneath qualifying vegetation.
 
 ## Obtain basic summaries of your data (Neonics)
 
 5.  What are the dimensions of the dataset?
 
 ```{r Q5}
-
+# calculated dimensions of the Neonics dataset using dim() function
+dim_Neonics <- dim(Neonics)
+dim_Neonics
 
 ```
 
 6.  Using the `summary` function on the "Effect" column, determine the most common effects that are studied. Why might these effects specifically be of interest? [Tip: The `sort()` command is useful for listing the values in order of magnitude...]
 
 ```{r Q6}
+# converted the effect column to factors before calling the summary function
+common_effects <- summary(as.factor(Neonics$Effect))
 
+# sorted the common effects to better see the most common effects
+sort(common_effects)
 
 ```
 
-> Answer:
-
+> Answer: Morality, population, and genetics are the most common effects that are studied.
 
 7.  Using the `summary` function, determine the six most commonly studied species in the dataset (common name). What do these species have in common, and why might they be of interest over other insects? Feel free to do a brief internet search for more information if needed.[TIP: Explore the help on the `summary()` function, in particular the `maxsum` argument...]
 
 ```{r Q7}
-
+# found the six most commonly studied species using summary()
+six_common_spec <- summary(as.factor(Neonics$X.Species.Common.Name), maxsum = 7)
+six_common_spec
 
 ```
 
-> Answer:
+> Answer: The six most commonly studied species in the data set are Honey Bee, Carniolan Honey Bee, Parasitic Wasp, Bumble Bee, Italian Honeybee, and Asiatic Honey Bee. All of these species are bee species which may be of interest over other insects because they are pollinators and are important for agriculture and plant health. Studying how they are impacted by neonicotinoids is important for the agricultural industry.
 
 8.  Concentrations are always a numeric value. What is the class of `Conc.1.Mean..Author..` column in the dataset, and why is it not numeric? [Tip: Viewing the dataframe may be helpful...]
 
 ```{r Q8}
+# determined the class of the column `Conc.1.Mean..Author..`
+class(Neonics$X.Conc.1.Mean..Author..)
 
+# viewed the column `Conc.1.Mean..Author..`
+head(Neonics$X.Conc.1.Mean..Author..)
 
 ```
 
-> Answer:
+> Answer: The class of the `Conc.1.Mean..Author..` column is character. It's not numeric because some of the values are followed by a slash "/" symbol.
 
 ## Explore your data graphically (Neonics)
 
-9. Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information. 
+9.  Create a bar graph of Endpoint counts. What are the two most common end points, and how are they defined? Consult the ECOTOX_CodeAppendix for more information.
 
 [**TIP**: Add `theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))` to the end of your plot command to rotate and align the X-axis labels...]
 
 ```{r Q11}
-
+# plot bar graph of Endpoint counts using ggplot and geom_bar()
+ggplot(Neonics, aes(x = Endpoint.)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 ```
 
-> Answer:
+> Answer: The two most common end points are LOEL and NOEL. LOEL is defined by low observed effect level and NOEL is defined by no observed effect concentration.
 
 ## Explore your data (Litter)
 
 10. Determine the class of collectDate. Is it a date? If not, change to a date and confirm the new class of the variable. Using the `unique` function, determine which dates litter was sampled in August 2018.
 
 ```{r Q12}
+# checked if collectDate's class is date
+class(Litter$collectDate)
 
+# filter data to just August 2018
+aug_18_sampling <- Litter %>%
+  filter(grepl("2018-08", collectDate))
+
+# found the dates litter was sampled in August 2018 using unique()
+unique(aug_18_sampling$collectDate)
 
 ```
 
 11. Using the `unique` function, list the different plotIDs sampled at Niwot Ridge. How is the information obtained from `unique` different from that obtained from `summary`?
 
 ```{r Q13}
+# find unique plot IDs
+unique(Litter$plotID)
 
+# summarized count of data for each plot ID
+summary(as.factor(Litter$plotID))
 
 ```
 
-> Answer:
+> Answer: The `unique` function only gives us a list of the different plotIDs sampled at Niwot Ridge. The `summary` function includes the count of data sampled at each unique plotID.
 
 12. Create a bar graph of functionalGroup counts. This shows you what type of litter is collected at the Niwot Ridge sites. Notice that litter types are fairly equally distributed across the Niwot Ridge sites.
 
 ```{r Q14}
-
+# plot bar graph of types of litter using ggplot and geombar
+ggplot(Litter, aes(x = functionalGroup)) +
+  geom_bar()
 
 ```
 
-
 What type(s) of litter tend to have the highest biomass at these sites?
 
-> Answer:
+> Answer: Needles, twigs/branches, and woody material tend to have the highest biomass at these sites.
 
 13. Write a short data-exploration summary for Neonics.
 
-> - **One key characteristic:** 
-> - **One data-quality issue:** 
-> - **One interesting pattern:** 
-> - **One question for further analysis:** 
+> -   **One key characteristic:** 8748 insects studied for the impacts of neonicotinoids on insects.
+> -   **One data-quality issue:** missing data for concentration measurements of neonicotinoids in insects
+> -   **One interesting pattern:** the top species studied in the data set are bees
+> -   **One question for further analysis:** do different species of bees have different responses to neonicotinoids?
 
 14. Write a short data-exploration summary for Litter.
 
-> - **One key characteristic:** 
-> - **One data-quality issue:** 
-> - **One interesting pattern:** 
-> - **One question for further analysis:** 
+> -   **One key characteristic:** 188 samples were taken across 8 years from 2016 to 2024.
+> -   **One data-quality issue:** missing data in the sample condition and sample preparation method columns of the data set.
+> -   **One interesting pattern:** count of each type of litter is relatively equally distributed across the Niwot Ridge sites.
+> -   **One question for further analysis:** do types of litter vary significantly between sample sites and months?
