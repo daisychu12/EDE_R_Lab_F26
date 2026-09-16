@@ -42,6 +42,7 @@ vignettes/*.pdf
 *.Rproj
 *.pdf
 *_Complete.pdf
+*_Complete.Rmd
 *_KEY.Rmd
 *_KEY.pdf
 *_FIXED.Rmd
