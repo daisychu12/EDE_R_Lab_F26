@@ -36,7 +36,6 @@ file for information about the variables and measurements.
 2. Add the appropriate code to reveal the dimensions of the four datasets. 
 
 ```{r setup questions 1-2, message = FALSE}
-knitr::opts_chunk$set(include = FALSE)
 #1a load the tidyverse and here packages
 library(tidyverse)
 library(here)
@@ -184,7 +183,7 @@ following conditions:
   
   * Hint: the dimensions of this dataset should be 15,012 × 9.
 
-```{r question 8}
+```{r question 8, message=FALSE, warning=FALSE}
 #8 
 # create a daily site-level data set
 EPAair_daily <- EPAair_24_25 %>%
