@@ -36,20 +36,24 @@ file for information about the variables and measurements.
 2. Add the appropriate code to reveal the dimensions of the four datasets. 
 
 ```{r setup questions 1-2, message = FALSE}
-#1a load the tidyverse and here packages
+#1a 
+# load the tidyverse and here packages
 library(tidyverse)
 library(here)
 
-#1b check working directory
+#1b 
+# check working directory
 getwd()
 
-#1c read all four raw files associated with the EPA Air dataset
+#1c 
+# read all four raw files associated with the EPA Air dataset
 EPAair_O3_NC2024 <- read.csv(here("Data/Raw/EPAair_O3_NC2024_raw.csv"))
 EPAair_O3_NC2025 <- read.csv(here("Data/Raw/EPAair_O3_NC2025_raw.csv"))
 EPAair_PM25_NC2024 <- read.csv(here("Data/Raw/EPAair_PM25_NC2024_raw.csv"))
 EPAair_PM25_NC2025 <- read.csv(here("Data/Raw/EPAair_PM25_NC2025_raw.csv"))
 
-#2 see dimensions of the four data sets
+#2 
+# see dimensions of the four data sets
 dim(EPAair_O3_NC2024)
 dim(EPAair_O3_NC2025)
 dim(EPAair_PM25_NC2024)
@@ -57,14 +61,19 @@ dim(EPAair_PM25_NC2025)
 
 ```
 The dimensions of each data set is listed below:
-EPAair_O3_NC2024 has 9519 observations and 21 variables
-EPAair_O3_NC2025 has 9466 observations and 21 variables
-EPAair_PM25_NC2024 has 9752 observations and 22 variables
-EPAair_PM25_NC2025 has 10184 observations and 22 variables
+
+EPAair_O3_NC2024 has 9519 rows and 21 columns
+
+EPAair_O3_NC2025 has 9466 rows and 21 columns
+
+EPAair_PM25_NC2024 has 9752 rows and 22 columns
+
+EPAair_PM25_NC2025 has 10184 rows and 22 columns
 
 
 > All four datasets should have the same number of columns (PM2.5 has one extra column),
 but unique record counts (rows). Do your datasets follow this pattern?
+
 Yes, both of my ozone datasets have 21 columns and unique number of rows, while both
 of my PM 2.5 data sets have 22 variables and a unique number of rows.
 
@@ -81,13 +90,15 @@ AQS.Parameter.Description, County, Site.Latitude, Site.Longitude
 (all cells in this column should be identical).
 
 ```{r questions 3 thru 5}
-#3 convert the Date columns of each data set to be date objects using mdy()
+#3 
+# convert the Date columns of each data set to be date objects using mdy()
 EPAair_O3_NC2024$Date <- mdy(EPAair_O3_NC2024$Date)
 EPAair_O3_NC2025$Date <- mdy(EPAair_O3_NC2025$Date)
 EPAair_PM25_NC2024$Date <- mdy(EPAair_PM25_NC2024$Date)
 EPAair_PM25_NC2025$Date <- mdy(EPAair_PM25_NC2025$Date)
 
-#4 select columns: Date, Daily.AQI.Value, Local.Site.Name, 
+#4 
+# select columns: Date, Daily.AQI.Value, Local.Site.Name, 
 # AQS.Parameter.Description, County, Site.Latitude, Site.Longitude
 # for each data set
 EPAair_O3_NC2024_proc <- EPAair_O3_NC2024 %>%
@@ -106,7 +117,8 @@ EPAair_PM25_NC2025_proc <- EPAair_PM25_NC2025 %>%
   select(Date, Daily.AQI.Value, Local.Site.Name, AQS.Parameter.Description,
          County, Site.Latitude, Site.Longitude)
 
-#5 for PM2.5 data sets, fill all cells in the AQS.Parameter.Description
+#5 
+# for PM2.5 data sets, fill all cells in the AQS.Parameter.Description
 # column with "PM2.5"
 EPAair_PM25_NC2024_proc$AQS.Parameter.Description <- "PM2.5"
 EPAair_PM25_NC2025_proc$AQS.Parameter.Description <- "PM2.5"
@@ -118,7 +130,8 @@ EPAair_PM25_NC2025_proc$AQS.Parameter.Description <- "PM2.5"
 6. Save all four processed datasets in the Processed folder. Use the same file names as the raw files but replace "raw" with "processed".
 
 ```{r question 6}
-#6 save all four processed data sets in the Processed folder
+#6 
+# save all four processed data sets in the Processed folder
 # rename files same as raw files but replace "raw" with "processed"
 write.csv(EPAair_O3_NC2024_proc,
           row.names = FALSE,
@@ -160,6 +173,8 @@ EPAair_24_25 <- bind_rows(EPAair_O3_NC2024_proc, EPAair_O3_NC2025_proc,
                           EPAair_PM25_NC2024_proc, EPAair_PM25_NC2025_proc)
 
 ```
+The seven TRUE outputs generated confirm that the column names for all 4
+data sets are identical.
 
 ### Question 8
 
@@ -201,10 +216,14 @@ EPAair_daily <- EPAair_24_25 %>%
             mean_latitude = mean(Site.Latitude),
             mean_longitude = mean(Site.Longitude)) %>%
   # add month and year columns from date
-  mutate(Month = month(Date),
-         Year = year(Date))
+  mutate(Month = as.integer(month(Date)),
+         Year = as.integer(year(Date)))
+
+dim(EPAair_daily)
 
 ```
+The dimensions of the daily site-level data set is confirmed to be 15012 
+rows and 9 columns.
 
 ### Questions 9–10
 
@@ -225,8 +244,8 @@ EPAair_daily_wide <- EPAair_daily %>%
 dim(EPAair_daily_wide)
 
 ```
-The dimension of the dataframe we pivoted wider is 9037 observations and
-9 variables.
+The dimension of the dataframe we pivoted wider is 9037 rows and
+9 columns.
 
 ### Question 11
 
@@ -250,7 +269,7 @@ missing. Mean PM2.5 may remain missing.
 
 13. Call up the dimensions of the summary dataset.
 
-```{r questions 12 and 13}
+```{r questions 12 and 13, message=FALSE, warning=FALSE}
 #12
 # create a monthly summary table with mean ozone and pm2.5 aqi values
 EPAair_monthly_summary <- EPAair_daily_wide %>%
@@ -265,16 +284,17 @@ EPAair_monthly_summary_omit <- EPAair_daily_wide %>%
             mean_pm2.5 = mean(PM2.5)) %>%
   na.omit()
 
-#13
+#13 
+# check dimensions of the summary data set
 dim(EPAair_monthly_summary)
 dim(EPAair_monthly_summary_omit)
 
 ```
-The dimensions of the monthly summary data frame is 186 observations of 5 
-variables.
+The dimensions of the monthly summary data frame using `drop_na(mean_ozone)` 
+if 186 rows and 5 columns.
 
 The dimensions of the monthly summary data frame using `na.omit()` is 131
-observations of 5 variables.
+rows and 5 columns.
 
 ### Question 14
 
