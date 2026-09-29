@@ -154,10 +154,10 @@ tp_po4_peter_paul_plot <- ntl_lter_peterpaul_processed %>%
   coord_cartesian(xlim = c(0, 43), ylim = c(0, 160)) +
   my_theme +
   labs(
-    title = "Phosphorous levels based on phosphate levels",
-    subtitle = "Peter and Paul lakes",
+    title = "Changes in Phosphorus Levels based on Phosphate Levels",
+    subtitle = "Peter and Paul Lakes",
     x = "Phosphate levels (ug P/L)",
-    y = "Total Phosphorous levels (ug P/L)",
+    y = "Total Phosphorus levels (ug P/L)",
     color = "Lake Name"
   )
 
@@ -294,10 +294,10 @@ needles_color <- neon_litter_processed %>%
                                 "Shrub Scrub")) +
   my_theme + 
   labs(
-    title = "Dry Mass of Needles Litter",
+    title = "Changes in Dry Litter Mass of Needles Over Time",
     subtitle = "Classified by NLCD classes",
     x = "Date of Collection",
-    y = "Litter Dry Mass (g)",
+    y = "Dry Litter Mass (g)",
     color = "NLCD Class"
   )
 
