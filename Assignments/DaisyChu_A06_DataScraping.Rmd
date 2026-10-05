@@ -144,7 +144,51 @@ max_day_use_plot
 
 ```{r construct.a.scraping.function}
 #6. 
-
+# create a scraping function with two inputs "PWSID" and "year"
+scrape.it <- function(the_year, pwsid){
+  
+  #Retrieve the website contents 
+  the_website <- read_html(paste0('https://www.ncwater.org/WUDC/app/LWSP/report.
+                                  php?pwsid=', pwsid, '&year=', the_year))
+  
+  #Set the element address variables (determined in the previous step)
+  water_system_name_tag <- "div+ table tr:nth-child(1) td:nth-child(2)"
+  ownership_tag <- "div+ table tr:nth-child(2) td:nth-child(4)"
+  max_day_use_month_tag <- "th~ td+ td"
+  
+  #Scrape the data items
+  water_system_name <- webpage %>%
+  html_nodes(water_system_name_tag) %>%
+  html_text()
+  
+  ownership <- webpage %>%
+  html_nodes(ownership_tag) %>%
+  html_text()
+  
+  max_day_use_month <- webpage %>%
+  html_nodes(max_day_use_month_tag) %>%
+  html_text()
+  
+  #Convert to a dataframe
+  df_durham_lwsp <- data.frame("Water_system_name" = rep(water_system_name, 12),
+                               "PWSID" = rep(pwsid, 12),
+                               "Ownership" = rep(ownership, 12),
+                               "Year" = rep(the_year, 12),
+                               "Month" = factor(c("Jan", "May", "Sep", "Feb", 
+                                                  "Jun", "Oct", "Mar", "Jul", 
+                                                  "Nov", "Apr", "Aug", "Dec"), 
+                                                levels = month.abb),
+                               "Monthly_max_day_use_mgd" = 
+                                 max_day_use_month) %>%
+  mutate("Date" = my(paste(Month, "-", Year))) %>%
+  arrange(Month)
+  
+  #Pause for a moment - scraping etiquette
+  Sys.sleep(1) #uncomment this if you are doing bulk scraping!
+  
+  #Return the dataframe
+  return(df_durham_lwsp)
+}
 
 ```
 
@@ -152,7 +196,9 @@ max_day_use_plot
 
 ```{r fetch.and.plot.Durham.2020.data}
 #7 
-
+# use scrape.it function for PWSID='03-32-010' and year 2020
+df_2020 <- scrape.it(2020, '03-32-010')
+df_2020
 
 ```
 
@@ -161,6 +207,37 @@ max_day_use_plot
 ```{r fetch.and.plot.Cary.2020.data}
 #8 
 
+  # set the element address variables (determined in the previous step)
+  water_system_name_tag <- "div+ table tr:nth-child(1) td:nth-child(2)"
+  ownership_tag <- "div+ table tr:nth-child(2) td:nth-child(4)"
+  max_day_use_month_tag <- "th~ td+ td"
+  
+  #Scrape data items
+  water_system_name <- webpage %>%
+  html_nodes(water_system_name_tag) %>%
+  html_text()
+  
+  ownership <- webpage %>%
+  html_nodes(ownership_tag) %>%
+  html_text()
+  
+  max_day_use_month <- webpage %>%
+  html_nodes(max_day_use_month_tag) %>%
+  html_text()
+  
+  #Convert to a dataframe
+  df_durham_lwsp <- data.frame("Water_system_name" = rep(water_system_name, 12),
+                               "PWSID" = rep(pwsid, 12),
+                               "Ownership" = rep(ownership, 12),
+                               "Year" = rep(the_year, 12),
+                               "Month" = factor(c("Jan", "May", "Sep", "Feb", 
+                                                  "Jun", "Oct", "Mar", "Jul", 
+                                                  "Nov", "Apr", "Aug", "Dec"), 
+                                                levels = month.abb),
+                               "Monthly_max_day_use_mgd" = 
+                                 max_day_use_month) %>%
+  mutate("Date" = my(paste(Month, "-", Year))) %>%
+  arrange(Month)
 
 ```
 
